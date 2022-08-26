@@ -1,109 +1,111 @@
-{{- define "common.cronjobs" -}}
-{{- range $cronjobs := .Values.cronjobs }}
+{{- define "common.cronjob" -}}
+{{- range $cronjob := .Values.cronjob }}
 ---
 {{ $name := include "common.names.fullname" $ }}
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: {{ $cronjobs.name }}
-  {{- with (merge ($.Values.controller.labels | default dict) (include "common.labels" $ | fromYaml)) }}
+  name: {{ $cronjob.name }}
+  {{- with (merge ($cronjob.labels | default dict) (include "common.labels" $ | fromYaml)) }}
   labels: {{- toYaml . | nindent 4 }}
   {{- end }}
+  {{- with (merge ($cronjob.annotations | default dict) (include "common.annotations" $ | fromYaml)) }}
+  annotations:
+  {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
-  {{- with $cronjobs.concurrencyPolicy }}
+  {{- with $cronjob.concurrencyPolicy }}
   concurrencyPolicy: {{ . }}
   {{- end }}
-  {{- with $cronjobs.failedJobsHistoryLimit }}
+  {{- with $cronjob.failedJobsHistoryLimit }}
   failedJobsHistoryLimit: {{ . }}
   {{- end }}
-  {{- with $cronjobs.successfulJobsHistoryLimit }}
+  {{- with $cronjob.successfulJobsHistoryLimit }}
   successfulJobsHistoryLimit: {{ . }}
   {{- end }}
-  {{- with $cronjobs.schedule | quote }}
+  {{- with $cronjob.schedule | quote }}
   schedule: {{ . }}
   {{- end }}
-  {{- with $cronjobs.startingDeadlineSeconds }}
+  {{- with $cronjob.startingDeadlineSeconds }}
   startingDeadlineSeconds: {{ . }}
   {{- end }}
-  {{- with $cronjobs.suspend }}
+  {{- with $cronjob.suspend }}
   suspend: {{ . }}
   {{- end }}
-  selector:
-    matchLabels: {{- include "common.labels.selectorLabels" $ | nindent 6 }}
   jobTemplate:
     spec:
       template:
         metadata:
           labels:
             {{- include "common.labels.selectorLabels" $ | nindent 12 }}
-            {{- with $cronjobs.podLabels }}
+            {{- with $cronjob.podLabels }}
               {{- toYaml . | nindent 12 }}
             {{- end }}
+        {{- with $cronjob.podAnnotations }}
           annotations:
-          {{- with $cronjobs.podAnnotations }}
             {{- toYaml . | nindent 12 }}
           {{- end }}
         spec:
-          {{- with $cronjobs.serviceAccount }}
+          {{- with $cronjob.serviceAccountName }}
           serviceAccountName: {{ . }}
           {{- end }}
-          {{- if $cronjobs.securityContext }}
+          {{- if $cronjob.securityContext }}
           securityContext:
-            {{- if index $cronjobs "securityContext" "runAsUser" }}
-            runAsUser: {{ index $cronjobs "securityContext" "runAsUser" }}
+            {{- if index $cronjob "securityContext" "runAsUser" }}
+            runAsUser: {{ index $cronjob "securityContext" "runAsUser" }}
             {{- end }}
-            {{- if index $cronjobs "securityContext" "runAsGroup" }}
-            runAsGroup: {{ index $cronjobs "securityContext" "runAsGroup" }}
+            {{- if index $cronjob "securityContext" "runAsGroup" }}
+            runAsGroup: {{ index $cronjob "securityContext" "runAsGroup" }}
             {{- end }}
-            {{- if index $cronjobs "securityContext" "fsGroup" }}
-            fsGroup: {{ index $cronjobs "securityContext" "fsGroup" }}
+            {{- if index $cronjob "securityContext" "fsGroup" }}
+            fsGroup: {{ index $cronjob "securityContext" "fsGroup" }}
             {{- end }}
           {{- end }}
-          {{- with $cronjobs.imagePullSecrets }}
+          {{- with $cronjob.imagePullSecrets }}
           imagePullSecrets:
             {{- toYaml . | nindent 10 }}
           {{- end }}
-          restartPolicy: {{ $cronjobs.restartPolicy }}
+          restartPolicy: {{ $cronjob.restartPolicy }}
           containers:
-          - name: {{ $cronjobs.name }}
-            image: {{ index $cronjobs "image" "repository" }}:{{ index $cronjobs "image" "tag" }}
-            imagePullPolicy: {{ $cronjobs.image.imagePullPolicy | default "Always" }}
-            {{- with $cronjobs.env }}
+          - name: {{ $cronjob.name }}
+            image: {{ index $cronjob "image" "repository" }}:{{ index $cronjob "image" "tag" }}
+            imagePullPolicy: {{ $cronjob.image.imagePullPolicy | default "Always" }}
+            {{- with $cronjob.env }}
             env:
               {{- toYaml . | nindent 12 }}
             {{- end }}
-            {{- with $cronjobs.envFrom }}
+            {{- with $cronjob.envFrom }}
             envFrom:
               {{- toYaml . | nindent 12 }}
             {{- end }}
-            {{- with $cronjobs.command }}
+            {{- with $cronjob.command }}
             command: {{- toYaml . | nindent 12 }}
             {{- end }}
-            {{- with $cronjobs.args }}
+            {{- with $cronjob.args }}
             args:
               {{- toYaml . | nindent 12 }}
             {{- end }}
-            {{- with $cronjobs.resources }}
+            {{- with $cronjob.resources }}
             resources:
               {{- toYaml . | nindent 14 }}
             {{- end }}
-            {{- with $cronjobs.volumeMounts }}
+            {{- with $cronjob.volumeMounts }}
             volumeMounts:
               {{- toYaml . | nindent 12 }}
             {{- end }}
-          {{- with $cronjobs.nodeSelector }}
+          {{- with $cronjob.nodeSelector }}
           nodeSelector:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- with $cronjobs.affinity }}
+          {{- with $cronjob.affinity }}
           affinity:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- with $cronjobs.tolerations }}
+          {{- with $cronjob.tolerations }}
           tolerations:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- with $cronjobs.volumes }}
+          {{- with $cronjob.volumes }}
           volumes:
             {{- toYaml . | nindent 10 }}
           {{- end }}
