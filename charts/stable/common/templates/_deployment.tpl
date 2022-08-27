@@ -40,8 +40,8 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/config: {{- include ("common.configmap") . | sha256sum }}
-      {{ if .Values.podAnnotations }}
+        checksum/config: {{ include ("common.configmap") . | sha256sum }}
+      {{- with .Values.podAnnotations }}
         {{- tpl (toYaml .Values.podAnnotations) . | nindent 8 }}
       {{- end }}
       labels:
