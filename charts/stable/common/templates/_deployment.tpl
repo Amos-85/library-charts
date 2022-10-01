@@ -41,6 +41,7 @@ spec:
     metadata:
       annotations:
         checksum/config: {{ include ("common.configmap") . | sha256sum }}
+        checksum/secret: {{ include ("common.secret") . | sha256sum }}
       {{- with .Values.podAnnotations }}
         {{- tpl (toYaml .Values.podAnnotations) . | nindent 8 }}
       {{- end }}

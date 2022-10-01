@@ -8,7 +8,7 @@
     {{- if kindIs "string" . }}
     - {{ . }}
     {{- else }}
-      {{ toYaml . | nindent 4 }}
+      {{- toYaml . | nindent 2 }}
     {{- end }}
   {{- end }}
   {{- with .Values.args }}
@@ -16,16 +16,16 @@
     {{- if kindIs "string" . }}
     - {{ . }}
     {{- else }}
-    {{ toYaml . | nindent 4 }}
+    {{- toYaml . | nindent 2 }}
     {{- end }}
   {{- end }}
   {{- with .Values.securityContext }}
   securityContext:
-    {{- toYaml . | nindent 4 }}
+    {{- toYaml . | nindent 2 }}
   {{- end }}
   {{- with .Values.lifecycle }}
   lifecycle:
-    {{- toYaml . | nindent 4 }}
+    {{- toYaml . | nindent 2 }}
   {{- end }}
   {{- with .Values.termination.messagePath }}
   terminationMessagePath: {{ . }}
