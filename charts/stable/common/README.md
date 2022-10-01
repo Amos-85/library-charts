@@ -289,6 +289,43 @@ All notable changes to this library Helm chart will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+### [4.6.0]
+
+#### Added
+
+- Support cronjob / job, add secret checksum to deploy / ds / sts
+
+### [4.5.2]
+
+#### Fixed
+
+- Fixed environment variable processing logic for main container when initContainers or additionalContainers were set.
+
+### [4.5.1]
+
+#### Fixed
+
+- Fixed environment variable processing logic for initContainers and additionalContainers.
+
+### [4.5.0]
+
+#### Added
+
+- Support checksum/config annotations for configMaps to automate roll deployments/daemonsets/statefulsets after config changes.
+- Support Gluetun VPN client add-on. Please see [the project repository](https://github.com/qdm12/gluetun) for more information and how to configure.
+- Added support for the `envFrom` field in the VPN add-on.
+
+#### Changed
+
+- Updated and pinned `netshoot` add-on image to `v0.7`.
+- Updated `code-server` add-on image to `4.5.1`.
+- Updated `promtail` add-on image to `2.6.1`.
+
+#### Fixed
+
+- Added `ingressClassName` description under the `code-server` add-on.
+- `valueFrom` now works correctly when `env` is a list of variables.
+
 ### [4.4.2]
 
 #### Fixed
