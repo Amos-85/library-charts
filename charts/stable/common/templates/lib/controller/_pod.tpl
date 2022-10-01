@@ -2,7 +2,7 @@
 The pod definition included in the controller.
 */ -}}
 {{- define "common.controller.pod" -}}
-  {{- with .Values.imagePullSecrets }}
+  {{- with .Values.imagePullSecrets -}}
 imagePullSecrets:
     {{- toYaml . | nindent 2 }}
   {{- end }}

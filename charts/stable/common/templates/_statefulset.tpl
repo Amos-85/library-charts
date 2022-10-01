@@ -34,8 +34,10 @@ spec:
   serviceName: {{ include "common.names.fullname" . }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
       annotations:
+        checksum/config: {{ include ("common.configmap") . | sha256sum }}
+	checksum/secret: {{ include ("common.secret") . | sha256sum }}
+      {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
