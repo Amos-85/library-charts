@@ -21,12 +21,10 @@ spec:
       {{- include "common.labels.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with include ("common.podAnnotations") . }}
+    {{- with include ("common.podAnnotations") . }}
       annotations:
-        checksum/config: {{ include ("common.configmap") . | sha256sum }}
-        checksum/secret: {{ include ("common.secret") . | sha256sum }}
-      {{- . | nindent 8 }}
-      {{- end }}
+        {{- . | nindent 8 }}
+    {{- end }}
       labels:
         {{- include "common.labels.selectorLabels" . | nindent 8 }}
         {{- with .Values.podLabels }}

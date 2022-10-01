@@ -16,12 +16,21 @@
   {{- end -}}
 
   {{- $configMapsFound := false -}}
+  {{- $secretFound := false -}}
   {{- range $name, $configmap := .Values.configmap -}}
     {{- if $configmap.enabled -}}
       {{- $configMapsFound = true -}}
     {{- end -}}
   {{- end -}}
+  {{- range $name, $secret := .Values.secret -}}
+    {{- if $secret -}}
+      {{- $secretFound = true -}}
+    {{- end -}}
+  {{- end -}}
   {{- if $configMapsFound -}}
     {{- printf "checksum/config: %v" (include ("common.configmap") . | sha256sum) | nindent 0 -}}
+  {{- end -}}
+  {{- if $secretFound -}}
+    {{- printf "checksum/secret: %v" (include ("common.secret") . | sha256sum) | nindent 0 -}}
   {{- end -}}
 {{- end -}}
