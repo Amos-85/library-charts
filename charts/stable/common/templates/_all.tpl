@@ -54,6 +54,7 @@ Main entrypoint for the common library chart. It will render all underlying temp
   {{ include "common.job" . | nindent 0 }}
   {{ include "common.cronjob" . | nindent 0 }}
   {{ include "common.extraDeploy" . | nindent 0 }}
+  {{ include "common.external-secret" . | nindent 0}}
 
   {{- if .Values.secret -}}
     {{ include "common.secret" .  | nindent 0 }}

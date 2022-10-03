@@ -17,6 +17,7 @@
 
   {{- $configMapsFound := false -}}
   {{- $secretFound := false -}}
+  {{- $externalSecretFound := false -}}
   {{- range $name, $configmap := .Values.configmap -}}
     {{- if $configmap.enabled -}}
       {{- $configMapsFound = true -}}
@@ -27,10 +28,18 @@
       {{- $secretFound = true -}}
     {{- end -}}
   {{- end -}}
+  {{- range $name, $externalSecret := index .Values "external-secrets" -}}
+    {{- if $externalSecret -}}
+      {{- $externalSecretFound = true -}}
+    {{- end -}}
+  {{- end -}}
   {{- if $configMapsFound -}}
     {{- printf "checksum/config: %v" (include ("common.configmap") . | sha256sum) | nindent 0 -}}
   {{- end -}}
   {{- if $secretFound -}}
     {{- printf "checksum/secret: %v" (include ("common.secret") . | sha256sum) | nindent 0 -}}
+  {{- end -}}
+  {{- if $externalSecretFound -}}
+    {{- printf "checksum/external-secrets: %v" (include ("common.external-secret") . | sha256sum) | nindent 0 -}}
   {{- end -}}
 {{- end -}}
