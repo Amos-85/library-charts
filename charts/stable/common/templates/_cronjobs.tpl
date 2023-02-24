@@ -1,11 +1,11 @@
 {{- define "common.cronjob" -}}
-{{- range $cronjob := .Values.cronjob }}
+{{- range $key, $cronjob := .Values.cronjob }}
 ---
 {{ $name := include "common.names.fullname" $ }}
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: {{ $cronjob.name }}
+  name: {{ $key }}
   {{- with (merge ($cronjob.labels | default dict) (include "common.labels" $ | fromYaml)) }}
   labels: {{- toYaml . | nindent 4 }}
   {{- end }}

@@ -1,11 +1,11 @@
 {{- define "common.job" -}}
-{{- range $job := .Values.job }}
+{{- range $key, $job := .Values.job }}
 ---
 {{ $name := include "common.names.fullname" $ }}
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ $job.name }}
+  name: {{ $key }}
   {{- with (merge ($job.labels | default dict) (include "common.labels" $ | fromYaml) ) }}
   labels: {{- toYaml . | nindent 4 }}
   {{- end }}

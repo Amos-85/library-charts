@@ -5,6 +5,10 @@ The ServiceAccount object to be created.
 ---
 apiVersion: v1
 kind: ServiceAccount
+{{- with .Values.serviceAccount.imagePullSecrets }}
+imagePullSecrets:
+{{- toYaml . | nindent 0 }}
+{{- end }}
 metadata:
   name: {{ include "common.names.serviceAccountName" . }}
   {{- with (merge (.Values.serviceAccount.labels | default dict) (include "common.labels" $ | fromYaml)) }}
