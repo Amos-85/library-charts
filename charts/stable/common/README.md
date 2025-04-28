@@ -2,9 +2,9 @@
 
 ![Version: 4.8.1](https://img.shields.io/badge/Version-4.8.1-informational?style=flat-square) ![Type: library](https://img.shields.io/badge/Type-library-informational?style=flat-square)
 
-Function library for k8s-at-home charts
+Function library for blissflow charts
 
-Since a lot of the k8s-at-home charts follow a similar pattern, this library was built to reduce maintenance cost between the charts that use it and try achieve a goal of being DRY.
+Since a lot of the blissflow charts follow a similar pattern, this library was built to reduce maintenance cost between the charts that use it and try achieve a goal of being DRY.
 
 ## Requirements
 
@@ -30,10 +30,10 @@ Include this chart as a dependency in your `Chart.yaml` e.g.
 dependencies:
 - name: common
   version: 3.0.0
-  repository: https://k8s-at-home.com/charts/
+  repository: https://blissflow.com/charts/
 ```
 
-For more information, take a look at the [Docs](http://docs.k8s-at-home.com/our-helm-charts/common-library/).
+For more information, take a look at the [Docs](http://docs.blissflow.com/our-helm-charts/common-library/).
 
 ## Configuration
 
@@ -45,13 +45,13 @@ N/A
 
 ## Values
 
-**Important**: When deploying an application Helm chart you can add more values from our common library chart [here](https://github.com/k8s-at-home/library-charts/tree/main/charts/stable/common)
+**Important**: When deploying an application Helm chart you can add more values from our common library chart [here](https://github.com/blissflow/library-charts/tree/main/charts/stable/common)
 
 | Key                                         | Type   | Default                           | Description                                                                                                                                                                                                                                                                                                                                                                           |
 |---------------------------------------------|--------|-----------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | additionalContainers                        | object | `{}`                              | Specify any additional containers here as dictionary items. Each additional container should have its own key. Helm templates can be used.                                                                                                                                                                                                                                            |
 | addons                                      | object | See below                         | The common chart supports several add-ons. These can be configured under this key.                                                                                                                                                                                                                                                                                                    |
-| addons.codeserver                           | object | See values.yaml                   | The common library supports adding a code-server add-on to access files. It can be configured under this key. For more info, check out [our docs](http://docs.k8s-at-home.com/our-helm-charts/common-library-add-ons/#code-server)                                                                                                                                                    |
+| addons.codeserver                           | object | See values.yaml                   | The common library supports adding a code-server add-on to access files. It can be configured under this key. For more info, check out [our docs](http://docs.blissflow.com/our-helm-charts/common-library-add-ons/#code-server)                                                                                                                                                    |
 | addons.codeserver.args                      | list   | `["--auth","none"]`               | Set codeserver command line arguments. Consider setting --user-data-dir to a persistent location to preserve code-server setting changes                                                                                                                                                                                                                                              |
 | addons.codeserver.enabled                   | bool   | `false`                           | Enable running a code-server container in the pod                                                                                                                                                                                                                                                                                                                                     |
 | addons.codeserver.env                       | object | `{}`                              | Set any environment variables for code-server here                                                                                                                                                                                                                                                                                                                                    |
@@ -82,7 +82,7 @@ N/A
 | addons.promtail.logs                        | list   | `[]`                              | The paths to logs on the volume                                                                                                                                                                                                                                                                                                                                                       |
 | addons.promtail.loki                        | string | `""`                              | The URL to Loki                                                                                                                                                                                                                                                                                                                                                                       |
 | addons.promtail.volumeMounts                | list   | `[]`                              | Specify a list of volumes that get mounted in the promtail container. At least 1 volumeMount is required!                                                                                                                                                                                                                                                                             |
-| addons.vpn                                  | object | See values.yaml                   | The common chart supports adding a VPN add-on. It can be configured under this key. For more info, check out [our docs](http://docs.k8s-at-home.com/our-helm-charts/common-library-add-ons/#wireguard-vpn)                                                                                                                                                                            |
+| addons.vpn                                  | object | See values.yaml                   | The common chart supports adding a VPN add-on. It can be configured under this key. For more info, check out [our docs](http://docs.blissflow.com/our-helm-charts/common-library-add-ons/#wireguard-vpn)                                                                                                                                                                            |
 | addons.vpn.args                             | list   | `[]`                              | Override the args for the vpn sidecar container                                                                                                                                                                                                                                                                                                                                       |
 | addons.vpn.configFile                       | string | `nil`                             | Provide a customized vpn configuration file to be used by the VPN.                                                                                                                                                                                                                                                                                                                    |
 | addons.vpn.configFileSecret                 | string | `nil`                             | Reference an existing secret that contains the VPN configuration file The chart expects it to be present under the `vpnConfigfile` key.                                                                                                                                                                                                                                               |
@@ -105,7 +105,7 @@ N/A
 | addons.vpn.type                             | string | `"openvpn"`                       | Specify the VPN type. Valid options are openvpn or wireguard                                                                                                                                                                                                                                                                                                                          |
 | addons.vpn.wireguard                        | object | See below                         | WireGuard specific configuration                                                                                                                                                                                                                                                                                                                                                      |
 | addons.vpn.wireguard.image.pullPolicy       | string | `"IfNotPresent"`                  | Specify the WireGuard image pull policy                                                                                                                                                                                                                                                                                                                                               |
-| addons.vpn.wireguard.image.repository       | string | `"ghcr.io/k8s-at-home/wireguard"` | Specify the WireGuard image                                                                                                                                                                                                                                                                                                                                                           |
+| addons.vpn.wireguard.image.repository       | string | `"ghcr.io/blissflow/wireguard"` | Specify the WireGuard image                                                                                                                                                                                                                                                                                                                                                           |
 | addons.vpn.wireguard.image.tag              | string | `"v1.0.20210914"`                 | Specify the WireGuard image tag                                                                                                                                                                                                                                                                                                                                                       |
 | affinity                                    | object | `{}`                              | Defines affinity constraint rules. [[ref]](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#affinity-and-anti-affinity)                                                                                                                                                                                                                                       |
 | args                                        | list   | `[]`                              | Override the args for the default container                                                                                                                                                                                                                                                                                                                                           |
@@ -219,7 +219,7 @@ N/A
 | external-secrets                            | object | `{}`                              | Add external-secret object if external-secret operator installed.                                                                                                                                                                                                                                                                                                                     |
 | lifecycle                                   | object | `{}`                              | Configure the lifecycle for the main container                                                                                                                                                                                                                                                                                                                                        |
 | nodeSelector                                | object | `{}`                              | Node selection constraint [[ref]](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector)                                                                                                                                                                                                                                                              |
-| persistence                                 | object | See below                         | Configure persistence for the chart here. Additional items can be added by adding a dictionary key similar to the 'config' key. [[ref]](http://docs.k8s-at-home.com/our-helm-charts/common-library-storage)                                                                                                                                                                           |
+| persistence                                 | object | See below                         | Configure persistence for the chart here. Additional items can be added by adding a dictionary key similar to the 'config' key. [[ref]](http://docs.blissflow.com/our-helm-charts/common-library-storage)                                                                                                                                                                           |
 | persistence.config                          | object | See below                         | Default persistence for configuration files.                                                                                                                                                                                                                                                                                                                                          |
 | persistence.config.accessMode               | string | `"ReadWriteOnce"`                 | AccessMode for the persistent volume. Make sure to select an access mode that is supported by your storage provider! [[ref]](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes)                                                                                                                                                                            |
 | persistence.config.enabled                  | bool   | `false`                           | Enables or disables the persistence item                                                                                                                                                                                                                                                                                                                                              |
@@ -351,7 +351,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Added
 
-- Support for `nfs` as a persistence type. [[ref](https://docs.k8s-at-home.com/our-helm-charts/common-library-storage/#nfs-volume)].
+- Support for `nfs` as a persistence type. [[ref](https://docs.blissflow.com/our-helm-charts/common-library-storage/#nfs-volume)].
 - Support for setting custom `args` for VPN containers.
 - Support setting additional global labels. These will be applied to all objects rendered by the chart.
 - Support setting additional global annotations. These will be applied to all objects rendered by the chart.
@@ -359,7 +359,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Changed
 
-- `externalTrafficPolicy` (when a value is specified) is now set for all Service types. (fixes https://github.com/k8s-at-home/library-charts/issues/125)
+- `externalTrafficPolicy` (when a value is specified) is now set for all Service types. (fixes https://github.com/blissflow/library-charts/issues/125)
 - Changed the unit test framework to an easier and more readable solution.
 
 #### Fixed
@@ -396,7 +396,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Support for specifying configMaps directly in values.yaml.
 - Support for specifying annotations/labels on the VPN add-on `NetworkPolicy`.
 - Support for specifying custom podSelector labels on the VPN add-on `NetworkPolicy`.
-- Added `secret` and `configMap` as persistence types. [[ref]](http://docs.k8s-at-home.com/our-helm-charts/common-library-storage/).
+- Added `secret` and `configMap` as persistence types. [[ref]](http://docs.blissflow.com/our-helm-charts/common-library-storage/).
 
 ### [4.0.1]
 
@@ -422,15 +422,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Added
 
-- Support ability to specify the [mountPropagation](https://kubernetes.io/docs/concepts/storage/volumes/#mount-propagation) key under persistence items (https://github.com/k8s-at-home/library-charts/issues/74).
+- Support ability to specify the [mountPropagation](https://kubernetes.io/docs/concepts/storage/volumes/#mount-propagation) key under persistence items (https://github.com/blissflow/library-charts/issues/74).
 
 #### Changed
 
-- Changed the docstring for `persistence` to better reference [our documentation](http://docs.k8s-at-home.com/our-helm-charts/common-library-storage/) regarding Storage options.
+- Changed the docstring for `persistence` to better reference [our documentation](http://docs.blissflow.com/our-helm-charts/common-library-storage/) regarding Storage options.
 
 #### Fixed
 
-- Fixed an issue where the default `repository` value for the Wireguard addon was incorrect (https://github.com/k8s-at-home/library-charts/issues/69).
+- Fixed an issue where the default `repository` value for the Wireguard addon was incorrect (https://github.com/blissflow/library-charts/issues/69).
 - Fixed an issue where probes were not referencing the service `targetPort`.
 
 ### [3.2.0]
@@ -442,14 +442,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Removed
 
-- Removed persistence examples from the `values.yaml` file. These will be documented instead in [our documentation](http://docs.k8s-at-home.com/our-helm-charts/common-library/).
+- Removed persistence examples from the `values.yaml` file. These will be documented instead in [our documentation](http://docs.blissflow.com/our-helm-charts/common-library/).
 
 ### [3.1.1]
 
 #### Fixed
 
 - Fixed an issue where the default service would not be determined correctly for Ingress objects.
-- Fixed an issue where the code-server addon ingress would reference the wrong service when multiple hosts were specified (https://github.com/k8s-at-home/library-charts/issues/64).
+- Fixed an issue where the code-server addon ingress would reference the wrong service when multiple hosts were specified (https://github.com/blissflow/library-charts/issues/64).
 
 ### [3.1.0]
 
@@ -630,9 +630,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Support
 
-- See the [Docs](https://docs.k8s-at-home.com/our-helm-charts/getting-started/)
-- Open an [issue](https://github.com/k8s-at-home/charts/issues/new/choose)
-- Ask a [question](https://github.com/k8s-at-home/organization/discussions)
+- See the [Docs](https://docs.blissflow.com/our-helm-charts/getting-started/)
+- Open an [issue](https://github.com/blissflow/charts/issues/new/choose)
+- Ask a [question](https://github.com/blissflow/organization/discussions)
 - Join our [Discord](https://discord.gg/sTMX7Vh) community
 
 ----------------------------------------------

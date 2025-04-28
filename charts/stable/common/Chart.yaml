@@ -1,13 +1,13 @@
 apiVersion: v2
 name: common
-description: Function library for k8s-at-home charts
+description: Function library for blissflow charts
 type: library
 version: 4.8.1
 kubeVersion: ">=1.16.0-0"
 keywords:
-  - k8s-at-home
+  - blissflow
   - common
-home: https://github.com/k8s-at-home/library-charts/tree/main/stable/common
+home: https://github.com/blissflow/library-charts/tree/main/stable/common
 maintainers:
   - name: bjw-s
     email: me@bjw-s.dev

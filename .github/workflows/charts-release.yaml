@@ -15,7 +15,7 @@ jobs:
     name: Auto-generate chart README
     runs-on: ubuntu-20.04
     steps:
-    - name: Get k8s-at-home token
+    - name: Get blissflow token
       id: get-app-token
       uses: getsentry/action-github-app-token@v1
       with:
@@ -85,9 +85,9 @@ jobs:
       with:
         push_options: --force
         commit_message: Auto-generate chart README [no ci]
-        commit_user_name: k8s-at-home[bot]
-        commit_user_email: k8s-at-home[bot]@users.noreply.github.com
-        commit_author: k8s-at-home[bot] <k8s-at-home[bot]@users.noreply.github.com>
+        commit_user_name: blissflow[bot]
+        commit_user_email: blissflow[bot]@users.noreply.github.com
+        commit_author: blissflow[bot] <blissflow[bot]@users.noreply.github.com>
         file_pattern: charts/**/
 
   release-charts:
@@ -95,7 +95,7 @@ jobs:
     needs:
     - generate-readme
     steps:
-    - name: Get k8s-at-home token
+    - name: Get blissflow token
       id: get-app-token
       uses: getsentry/action-github-app-token@v1
       with:
@@ -111,8 +111,8 @@ jobs:
 
     - name: Configure Git
       run: |
-        git config user.name "k8s-at-home[bot]"
-        git config user.email "k8s-at-home[bot]@users.noreply.github.com"
+        git config user.name "blissflow[bot]"
+        git config user.email "blissflow[bot]@users.noreply.github.com"
 
     - name: Install Helm
       uses: azure/setup-helm@v3
@@ -123,7 +123,7 @@ jobs:
       uses: helm/chart-releaser-action@v1.4.0
       with:
         charts_dir: charts/*
-        charts_repo_url: https://library-charts.k8s-at-home.com
+        charts_repo_url: https://library-charts.blissflow.com
       env:
         CR_TOKEN: "${{ steps.get-app-token.outputs.token }}"
         CR_SKIP_EXISTING: "true"
