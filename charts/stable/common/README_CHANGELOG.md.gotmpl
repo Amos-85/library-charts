@@ -82,7 +82,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Added
 
-- Support for `nfs` as a persistence type. [[ref](https://docs.k8s-at-home.com/our-helm-charts/common-library-storage/#nfs-volume)].
+- Support for `nfs` as a persistence type. [[ref](https://docs.blissflow.tech/our-helm-charts/common-library-storage/#nfs-volume)].
 - Support for setting custom `args` for VPN containers.
 - Support setting additional global labels. These will be applied to all objects rendered by the chart.
 - Support setting additional global annotations. These will be applied to all objects rendered by the chart.
@@ -90,7 +90,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Changed
 
-- `externalTrafficPolicy` (when a value is specified) is now set for all Service types. (fixes https://github.com/k8s-at-home/library-charts/issues/125)
+- `externalTrafficPolicy` (when a value is specified) is now set for all Service types. (fixes https://github.com/blissflow/library-charts/issues/125)
 - Changed the unit test framework to an easier and more readable solution.
 
 #### Fixed
@@ -127,7 +127,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Support for specifying configMaps directly in values.yaml.
 - Support for specifying annotations/labels on the VPN add-on `NetworkPolicy`.
 - Support for specifying custom podSelector labels on the VPN add-on `NetworkPolicy`.
-- Added `secret` and `configMap` as persistence types. [[ref]](http://docs.k8s-at-home.com/our-helm-charts/common-library-storage/).
+- Added `secret` and `configMap` as persistence types. [[ref]](http://docs.blissflow.tech/our-helm-charts/common-library-storage/).
 
 ### [4.0.1]
 
@@ -153,15 +153,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Added
 
-- Support ability to specify the [mountPropagation](https://kubernetes.io/docs/concepts/storage/volumes/#mount-propagation) key under persistence items (https://github.com/k8s-at-home/library-charts/issues/74).
+- Support ability to specify the [mountPropagation](https://kubernetes.io/docs/concepts/storage/volumes/#mount-propagation) key under persistence items (https://github.com/blissflow/library-charts/issues/74).
 
 #### Changed
 
-- Changed the docstring for `persistence` to better reference [our documentation](http://docs.k8s-at-home.com/our-helm-charts/common-library-storage/) regarding Storage options.
+- Changed the docstring for `persistence` to better reference [our documentation](http://docs.blissflow.tech/our-helm-charts/common-library-storage/) regarding Storage options.
 
 #### Fixed
 
-- Fixed an issue where the default `repository` value for the Wireguard addon was incorrect (https://github.com/k8s-at-home/library-charts/issues/69).
+- Fixed an issue where the default `repository` value for the Wireguard addon was incorrect (https://github.com/blissflow/library-charts/issues/69).
 - Fixed an issue where probes were not referencing the service `targetPort`.
 
 ### [3.2.0]
@@ -173,14 +173,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Removed
 
-- Removed persistence examples from the `values.yaml` file. These will be documented instead in [our documentation](http://docs.k8s-at-home.com/our-helm-charts/common-library/).
+- Removed persistence examples from the `values.yaml` file. These will be documented instead in [our documentation](http://docs.blissflow.tech/our-helm-charts/common-library/).
 
 ### [3.1.1]
 
 #### Fixed
 
 - Fixed an issue where the default service would not be determined correctly for Ingress objects.
-- Fixed an issue where the code-server addon ingress would reference the wrong service when multiple hosts were specified (https://github.com/k8s-at-home/library-charts/issues/64).
+- Fixed an issue where the code-server addon ingress would reference the wrong service when multiple hosts were specified (https://github.com/blissflow/library-charts/issues/64).
 
 ### [3.1.0]
 

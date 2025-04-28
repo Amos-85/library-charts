@@ -4,7 +4,7 @@
 
 Helper chart to test different use cases of the common library
 
-**Homepage:** <https://github.com/k8s-at-home/library-charts/tree/main/stable/common-test>
+**Homepage:** <https://github.com/blissflow/library-charts/tree/main/stable/common-test>
 
 ## Maintainers
 

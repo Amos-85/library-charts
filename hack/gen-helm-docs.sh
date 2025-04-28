@@ -44,6 +44,8 @@ for chart in ${charts}; do
     cp -n "${readme_changelog_template}" "${chart_directory}" || true
 done
 
+echo "dirname: $(dirname "$chart"), basename: $(basename "$chart")"
+
 # Run helm-docs for charts using the common library and the common library itself
 helm-docs \
     --ignore-file="${repository}/.helmdocsignore" \

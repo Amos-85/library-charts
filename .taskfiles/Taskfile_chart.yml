@@ -8,7 +8,7 @@ tasks:
     cmds:
     - helm lint
     deps:
-    - dependency
+#    - dependency
     - check-chart
 
   ct-lint:
