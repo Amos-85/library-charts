@@ -4,4 +4,4 @@ helm-extra-args: --timeout 600s
 chart-dirs:
 - helper-charts
 chart-repos:
-- blissflow-libraries=https://library-charts.blissflow.com
+- blissflow-libraries=https://library-charts.blissflow.tech
