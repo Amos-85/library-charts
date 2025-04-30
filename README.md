@@ -41,7 +41,7 @@ See [CHANGELOG.md](./charts/stable/common/CHANGELOG.md) for release history and 
 ## Support
 
 If you need help:
-- Open an [Issue](https://github.com/BlissFlowTech/library-charts/issues)
+- Open an [Issue](https://github.com/amos-85/library-charts/issues)
 - Contact us at [contact@blissflow.tech](mailto:contact@blissflow.tech)
 
 ---
