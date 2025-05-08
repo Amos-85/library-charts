@@ -2,6 +2,27 @@ apiVersion: v1
 entries:
   common:
   - apiVersion: v2
+    created: "2025-05-08T15:54:09.629038103Z"
+    description: Function library for blissflow charts
+    digest: 3203a40951fde27cc9451658ee263ef090ea91bf65729ae33698cdabd4c9c878
+    home: https://github.com/blissflow/library-charts/tree/main/stable/common
+    keywords:
+    - blissflow
+    - common
+    kubeVersion: '>=1.16.0-0'
+    maintainers:
+    - email: me@bjw-s.dev
+      name: bjw-s
+    - email: devin.kray@gmail.com
+      name: onedr0p
+    - email: nick@cajun.pro
+      name: dirtycajunrice
+    name: common
+    type: library
+    urls:
+    - https://github.com/Amos-85/library-charts/releases/download/common-4.8.1/common-4.8.1.tgz
+    version: 4.8.1
+  - apiVersion: v2
     created: "2022-05-09T05:39:51.077800165Z"
     description: Function library for k8s-at-home charts
     digest: 1a865bed313fb766d9f07e7cce62a729dde40dc9f102a12bfee0b945585b34e5
@@ -565,4 +586,4 @@ entries:
     urls:
     - https://github.com/k8s-at-home/library-charts/releases/download/test-0.1.0/test-0.1.0.tgz
     version: 0.1.0
-generated: "2022-05-09T05:39:51.078098967Z"
+generated: "2025-05-08T15:54:09.629257753Z"
