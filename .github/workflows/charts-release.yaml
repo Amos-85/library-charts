@@ -60,6 +60,11 @@ jobs:
           commit_user_name: github-actions
           commit_user_email: github-actions@github.com
 
+      - name: Configure Git identity
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+
       - name: Set up chart-releaser
         uses: helm/chart-releaser-action@v1.7.0
         with:
