@@ -48,7 +48,10 @@ jobs:
           for chart in $CHARTS; do
             echo "Generating docs for chart $chart"
             if [ -f "$chart/Chart.yaml" ]; then
+              echo "Found Chart.yaml in $chart, generating docs..."
               ./hack/gen-helm-docs.sh "$(dirname "$chart")" "$(basename "$chart")"
+            else
+              echo "⚠️  Skipping $chart: Chart.yaml not found"
             fi
           done
 
