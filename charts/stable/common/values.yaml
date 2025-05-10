@@ -491,3 +491,8 @@ external-secret: {}
 
 # -- Additional extra resources to deploy
 extraDeploy: {}
+
+
+# Add a comment
+# Dummy change to trigger GitHub Actions
+
