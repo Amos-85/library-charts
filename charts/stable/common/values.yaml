@@ -492,4 +492,3 @@ external-secret: {}
 # -- Additional extra resources to deploy
 extraDeploy: {}
 
-# check trigger
