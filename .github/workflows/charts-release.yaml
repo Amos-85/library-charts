@@ -12,15 +12,15 @@ jobs:
   charts-release:
     runs-on: ubuntu-latest
     permissions:
-      contents: write  # for pushing README changes and releases
-      id-token: write  # required for OIDC (used by some actions)
-      packages: write  # in case OCI registry is used in future
+      contents: write
+      id-token: write
+      packages: write
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Required for git diff & tags
+          fetch-depth: 0  # Required for git diff
 
       - name: Set BASE_SHA
         id: base_sha
@@ -31,28 +31,53 @@ jobs:
             echo "BASE_SHA=$(git merge-base origin/main HEAD)" >> $GITHUB_OUTPUT
           fi
 
-      - name: Detect changed charts
-        id: changed_charts
-        run: |
-          CHARTS=$(git diff --name-only ${{ steps.base_sha.outputs.BASE_SHA }} HEAD | grep '^charts/' | awk -F/ '{print $1"/"$2"/"$3}' | sort -u || true)
-          echo "CHARTS=$CHARTS" >> $GITHUB_ENV
-          echo "Changed charts: $CHARTS"
-
       - name: Install helm-docs
         run: |
           curl -sSL https://github.com/norwoodj/helm-docs/releases/download/v1.14.2/helm-docs_1.14.2_Linux_x86_64.tar.gz | tar xz
           sudo mv helm-docs /usr/local/bin/
 
-      - name: Regenerate chart READMEs
+      - name: Regenerate READMEs for changed charts
         run: |
-          for chart in $CHARTS; do
-            echo "Generating docs for chart $chart"
-            if [ -f "$chart/Chart.yaml" ]; then
-              echo "Found Chart.yaml in $chart, generating docs..."
-              ./hack/gen-helm-docs.sh "$(dirname "$chart")" "$(basename "$chart")"
-            else
-              echo "⚠️  Skipping $chart: Chart.yaml not found"
-            fi
+          echo "🔍 Detecting changed chart paths..."
+          CHARTS=()
+          PATHS=($(git diff --name-only ${{ steps.base_sha.outputs.BASE_SHA }} HEAD))
+
+          for i in "${PATHS[@]}"
+          do
+              if [[ "$i" != charts/* ]]; then
+                  continue
+              fi
+
+              IFS='/' read -r -a path_parts <<< "$i"
+              if [[ ${#path_parts[@]} -lt 3 ]]; then
+                  continue
+              fi
+
+              CHART_PATH="${path_parts[1]}/${path_parts[2]}"
+              CHARTS+=("$CHART_PATH")
+          done
+
+          # Remove duplicates
+          CHARTS=( $(printf "%s\n" "${CHARTS[@]}" | sort -u) )
+
+          echo "📦 Changed charts:"
+          for i in "${CHARTS[@]}"; do
+            echo " - $i"
+          done
+
+          for i in "${CHARTS[@]}"
+          do
+              IFS='/' read -r -a chart_parts <<< "$i"
+              CATEGORY="${chart_parts[0]}"
+              NAME="${chart_parts[1]}"
+              CHART_DIR="charts/${CATEGORY}/${NAME}"
+
+              if [ -f "${CHART_DIR}/Chart.yaml" ]; then
+                echo "📄 Generating docs for chart: ${CATEGORY}/${NAME}"
+                ./hack/gen-helm-docs.sh "${CATEGORY}" "${NAME}"
+              else
+                echo "❌ Chart.yaml not found for ${CATEGORY}/${NAME}, skipping."
+              fi
           done
 
       - name: Commit and push README changes
