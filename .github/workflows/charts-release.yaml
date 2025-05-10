@@ -29,6 +29,7 @@ jobs:
             echo "BASE_SHA=${{ github.event.pull_request.base.sha }}" >> $GITHUB_OUTPUT
           else
             echo "BASE_SHA=$(git merge-base origin/main HEAD)" >> $GITHUB_OUTPUT
+            echo "Not PR, BASE_SHA is $(git merge-base origin/main HEAD)"
           fi
 
       - name: Install helm-docs
@@ -41,7 +42,6 @@ jobs:
           echo "🔍 Detecting changed chart paths..."
           CHARTS=()
           PATHS=($(git diff --name-only ${{ steps.base_sha.outputs.BASE_SHA }} HEAD))
-          echo "Paths are ${PATHS}"
 
           for i in "${PATHS[@]}"
           do
