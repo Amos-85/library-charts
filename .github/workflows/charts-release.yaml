@@ -42,6 +42,8 @@ jobs:
           echo "🔍 Detecting changed chart paths..."
           CHARTS=()
           PATHS=($(git diff --name-only ${{ steps.base_sha.outputs.BASE_SHA }} HEAD))
+          echo "diff is: " git diff --name-only ${{ steps.base_sha.outputs.BASE_SHA }} HEAD
+          echo "Paths are: ${PATHS}"
 
           for i in "${PATHS[@]}"
           do
