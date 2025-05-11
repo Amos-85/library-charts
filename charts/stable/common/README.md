@@ -50,68 +50,6 @@ N/A
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | additionalContainers | object | `{}` | Specify any additional containers here as dictionary items. Each additional container should have its own key. Helm templates can be used. |
-| addons | object | See below | The common chart supports several add-ons. These can be configured under this key. |
-| addons.codeserver | object | See values.yaml | The common library supports adding a code-server add-on to access files. It can be configured under this key. For more info, check out [our docs](http://docs.blissflow.tech/our-helm-charts/common-library-add-ons/#code-server) |
-| addons.codeserver.args | list | `["--auth","none"]` | Set codeserver command line arguments. Consider setting --user-data-dir to a persistent location to preserve code-server setting changes |
-| addons.codeserver.enabled | bool | `false` | Enable running a code-server container in the pod |
-| addons.codeserver.env | object | `{}` | Set any environment variables for code-server here |
-| addons.codeserver.git | object | See below | Optionally allow access a Git repository by passing in a private SSH key |
-| addons.codeserver.git.deployKey | string | `""` | Raw SSH private key |
-| addons.codeserver.git.deployKeyBase64 | string | `""` | Base64-encoded SSH private key. When both variables are set, the raw SSH key takes precedence. |
-| addons.codeserver.git.deployKeySecret | string | `""` | Existing secret containing SSH private key The chart expects it to be present under the `id_rsa` key. |
-| addons.codeserver.image.pullPolicy | string | `"IfNotPresent"` | Specify the code-server image pull policy |
-| addons.codeserver.image.repository | string | `"ghcr.io/coder/code-server"` | Specify the code-server image |
-| addons.codeserver.image.tag | string | `"4.5.1"` | Specify the code-server image tag |
-| addons.codeserver.ingress.enabled | bool | `false` | Enable an ingress for the code-server add-on. |
-| addons.codeserver.ingress.ingressClassName | string | `nil` | Set the ingressClass that is used for this ingress. Requires Kubernetes >=1.19 |
-| addons.codeserver.service.enabled | bool | `true` | Enable a service for the code-server add-on. |
-| addons.codeserver.volumeMounts | list | `[]` | Specify a list of volumes that get mounted in the code-server container. At least 1 volumeMount is required! |
-| addons.codeserver.workingDir | string | `""` | Specify the working dir that will be opened when code-server starts If not given, the app will default to the mountpah of the first specified volumeMount |
-| addons.netshoot | object | See values.yaml | The common library supports adding a netshoot add-on to troubleshoot network issues within a Pod. It can be configured under this key. |
-| addons.netshoot.enabled | bool | `false` | Enable running a netshoot container in the pod |
-| addons.netshoot.env | object | `{}` | Set any environment variables for netshoot here |
-| addons.netshoot.image.pullPolicy | string | `"IfNotPresent"` | Specify the netshoot image pull policy |
-| addons.netshoot.image.repository | string | `"ghcr.io/nicolaka/netshoot"` | Specify the netshoot image |
-| addons.netshoot.image.tag | string | `"v0.7"` | Specify the netshoot image tag |
-| addons.promtail | object | See values.yaml | The common library supports adding a promtail add-on to to access logs and ship them to loki. It can be configured under this key. |
-| addons.promtail.args | list | `[]` | Set promtail command line arguments |
-| addons.promtail.enabled | bool | `false` | Enable running a promtail container in the pod |
-| addons.promtail.env | object | `{}` | Set any environment variables for promtail here |
-| addons.promtail.image.pullPolicy | string | `"IfNotPresent"` | Specify the promtail image pull policy |
-| addons.promtail.image.repository | string | `"docker.io/grafana/promtail"` | Specify the promtail image |
-| addons.promtail.image.tag | string | `"2.6.1"` | Specify the promtail image tag |
-| addons.promtail.logs | list | `[]` | The paths to logs on the volume |
-| addons.promtail.loki | string | `""` | The URL to Loki |
-| addons.promtail.volumeMounts | list | `[]` | Specify a list of volumes that get mounted in the promtail container. At least 1 volumeMount is required! |
-| addons.vpn | object | See values.yaml | The common chart supports adding a VPN add-on. It can be configured under this key. For more info, check out [our docs](http://docs.blissflow.tech/our-helm-charts/common-library-add-ons/#wireguard-vpn) |
-| addons.vpn.args | list | `[]` | Override the args for the vpn sidecar container |
-| addons.vpn.configFile | string | `nil` | Provide a customized vpn configuration file to be used by the VPN. |
-| addons.vpn.configFileSecret | string | `nil` | Reference an existing secret that contains the VPN configuration file The chart expects it to be present under the `vpnConfigfile` key. |
-| addons.vpn.enabled | bool | `false` | Enable running a VPN in the pod to route traffic through a VPN |
-| addons.vpn.env | object | `{}` | All variables specified here will be added to the vpn sidecar container See the documentation of the VPN image for all config values |
-| addons.vpn.gluetun | object | See below | Make sure to read the [documentation](https://github.com/qdm12/gluetun/wiki) to see how to configure this addon! |
-| addons.vpn.gluetun.image.pullPolicy | string | `"IfNotPresent"` | Specify the Gluetun image pull policy |
-| addons.vpn.gluetun.image.repository | string | `"docker.io/qmcgaw/gluetun"` | Specify the Gluetun image |
-| addons.vpn.gluetun.image.tag | string | `"v3.30.0"` | Specify the Gluetun image tag |
-| addons.vpn.livenessProbe | object | `{}` | Optionally specify a livenessProbe, e.g. to check if the connection is still being protected by the VPN |
-| addons.vpn.networkPolicy.annotations | object | `{}` | Provide additional annotations which may be required. |
-| addons.vpn.networkPolicy.egress | string | `nil` | The egress configuration for your network policy, All outbound traffic from the pod will be blocked unless specified here. [[ref]](https://kubernetes.io/docs/concepts/services-networking/network-policies/) [[recipes]](https://github.com/ahmetb/kubernetes-network-policy-recipes) |
-| addons.vpn.networkPolicy.enabled | bool | `false` | If set to true, will deploy a network policy that blocks all outbound traffic except traffic specified as allowed |
-| addons.vpn.networkPolicy.labels | object | `{}` | Provide additional labels which may be required. |
-| addons.vpn.networkPolicy.podSelectorLabels | object | `{}` | Provide additional podSelector labels which may be required. |
-| addons.vpn.openvpn | object | See below | OpenVPN specific configuration |
-| addons.vpn.openvpn.auth | string | `nil` | Credentials to connect to the VPN Service (used with -a) |
-| addons.vpn.openvpn.authSecret | string | `nil` | Optionally specify an existing secret that contains the credentials. Credentials should be stored under the `VPN_AUTH` key |
-| addons.vpn.openvpn.image.pullPolicy | string | `"IfNotPresent"` | Specify the openvpn client image pull policy |
-| addons.vpn.openvpn.image.repository | string | `"dperson/openvpn-client"` | Specify the openvpn client image |
-| addons.vpn.openvpn.image.tag | string | `"latest"` | Specify the openvpn client image tag |
-| addons.vpn.scripts | object | See values.yaml | Provide custom up/down scripts that can be used by the vpn configuration. |
-| addons.vpn.securityContext | object | See values.yaml | Set the VPN container securityContext |
-| addons.vpn.type | string | `"openvpn"` | Specify the VPN type. Valid options are `openvpn`, `wireguard` and `gluetun`. |
-| addons.vpn.wireguard | object | See below | WireGuard specific configuration |
-| addons.vpn.wireguard.image.pullPolicy | string | `"IfNotPresent"` | Specify the WireGuard image pull policy |
-| addons.vpn.wireguard.image.repository | string | `"ghcr.io/blissflow/wireguard"` | Specify the WireGuard image |
-| addons.vpn.wireguard.image.tag | string | `"v1.0.20210914"` | Specify the WireGuard image tag |
 | affinity | object | `{}` | Defines affinity constraint rules. [[ref]](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#affinity-and-anti-affinity) |
 | args | list | `[]` | Override the args for the default container |
 | automountServiceAccountToken | bool | `true` | Specifies whether a service account token should be automatically mounted. |
@@ -133,11 +71,14 @@ N/A
 | controller.rollingUpdate.unavailable | string | `nil` | Set deployment RollingUpdate max unavailable |
 | controller.strategy | string | `nil` | Set the controller upgrade strategy For Deployments, valid values are Recreate (default) and RollingUpdate. For StatefulSets, valid values are OnDelete and RollingUpdate (default). DaemonSets ignore this. |
 | controller.type | string | `"deployment"` | Set the controller type. Valid options are deployment, daemonset or statefulset |
+| cronjob | object | `{}` | Set cronjob.  |
 | dnsConfig | object | `{}` | Optional DNS settings, configuring the ndots option may resolve nslookup issues on some Kubernetes setups. |
 | dnsPolicy | string | `nil` | Defaults to "ClusterFirst" if hostNetwork is false and "ClusterFirstWithHostNet" if hostNetwork is true. |
 | enableServiceLinks | bool | `true` | Enable/disable the generation of environment variables for services. [[ref]](https://kubernetes.io/docs/concepts/services-networking/connect-applications-service/#accessing-the-service) |
 | env | string | `nil` | Main environment variables. Template enabled. Syntax options: A) TZ: UTC B) PASSWD: '{{ .Release.Name }}' C) PASSWD:      configMapKeyRef:        name: config-map-name        key: key-name D) PASSWD:      valueFrom:        secretKeyRef:          name: secret-name          key: key-name      ... E) - name: TZ      value: UTC F) - name: TZ      value: '{{ .Release.Name }}' |
 | envFrom | list | `[]` | Secrets and/or ConfigMaps that will be loaded as environment variables. [[ref]](https://unofficial-kubernetes.readthedocs.io/en/latest/tasks/configure-pod-container/configmap/#use-case-consume-configmap-in-environment-variables) |
+| external-secret | object | `{}` | Set External Secrets |
+| extraDeploy | object | `{}` | Additional extra resources to deploy |
 | global.annotations | object | `{}` | Set additional global annotations. Helm templates can be used. |
 | global.fullnameOverride | string | `nil` | Set the entire name definition |
 | global.labels | object | `{}` | Set additional global labels. Helm templates can be used. |
@@ -163,6 +104,7 @@ N/A
 | ingress.main.primary | bool | `true` | Make this the primary ingress (used in probes, notes, etc...). If there is more than 1 ingress, make sure that only 1 ingress is marked as primary. |
 | ingress.main.tls | list | `[]` | Configure TLS for the ingress. Both secretName and hosts can process a Helm template. |
 | initContainers | object | `{}` | Specify any initContainers here as dictionary items. Each initContainer should have its own key. The dictionary item key will determine the order. Helm templates can be used. |
+| job | object | `{}` | Set job. |
 | lifecycle | object | `{}` | Configure the lifecycle for the main container |
 | nodeSelector | object | `{}` | Node selection constraint [[ref]](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector) |
 | persistence | object | See below | Configure persistence for the chart here. Additional items can be added by adding a dictionary key similar to the 'config' key. [[ref]](http://docs.blissflow.tech/our-helm-charts/common-library-storage) |
@@ -201,7 +143,9 @@ N/A
 | resources | object | `{}` | Set the resource requests / limits for the main container. |
 | runtimeClassName | string | `nil` | Allow specifying a runtimeClassName other than the default one (ie: nvidia) |
 | schedulerName | string | `nil` | Allows specifying a custom scheduler name |
-| secret | object | `{}` | Use this to populate a secret with the values you specify. Be aware that these values are not encrypted by default, and could therefore visible to anybody with access to the values.yaml file. |
+| secret | object | `{"date":{},"type":"Opaque"}` | Use this to populate a secret with the values you specify. Be aware that these values are not encrypted by default, and could therefore visible to anybody with access to the values.yaml file. |
+| secret.date | object | `{}` | secret data |
+| secret.type | string | `"Opaque"` | secret type default to Opaque |
 | securityContext | object | `{}` | Configure the Security Context for the main container |
 | service | object | See below | Configure the services for the chart here. Additional services can be added by adding a dictionary key similar to the 'main' service. |
 | service.main.annotations | object | `{}` | Provide additional annotations which may be required. |
@@ -222,6 +166,7 @@ N/A
 | service.main.type | string | `"ClusterIP"` | Set the service type |
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | serviceAccount.create | bool | `false` | Specifies whether a service account should be created |
+| serviceAccount.labels | object | `{}` | Lables to add to the service account |
 | serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
 | termination.gracePeriodSeconds | string | `nil` | [[ref](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#lifecycle)] |
 | termination.messagePath | string | `nil` | [[ref](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#lifecycle-1)] |
