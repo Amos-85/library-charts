@@ -15,7 +15,7 @@ permissions:
 jobs:
   label-precommit:
     name: Label pre-commit status
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     if: "${{ github.event.workflow.name == 'Pre-commit consistency check' }}"
     steps:
       - name: "Get information about the origin 'CI' run"
@@ -45,7 +45,7 @@ jobs:
 
   label-lint-install:
     name: Label lint and install status
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     if: "${{ github.event.workflow.name == 'Install and Lint' }}"
     steps:
       - name: "Get information about the origin 'CI' run"
