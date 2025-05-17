@@ -57,4 +57,3 @@ autoscaling:
       value: "5"
     selector:
       component: test-queue
-
