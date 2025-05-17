@@ -5,26 +5,6 @@ Main entrypoint for the common library chart. It will render all underlying temp
   {{- /* Merge the local chart values and the common chart defaults */ -}}
   {{- include "common.values.setup" . }}
 
-  {{- /* Enable code-server add-on if required */ -}}
-  {{- if .Values.addons.codeserver.enabled }}
-    {{- include "common.addon.codeserver" . }}
-  {{- end -}}
-
-  {{- /* Enable VPN add-on if required */ -}}
-  {{- if .Values.addons.vpn.enabled }}
-    {{- include "common.addon.vpn" . }}
-  {{- end -}}
-
-  {{- /* Enable promtail add-on if required */ -}}
-  {{- if .Values.addons.promtail.enabled }}
-    {{- include "common.addon.promtail" . }}
-  {{- end -}}
-
-  {{- /* Enable netshoot add-on if required */ -}}
-  {{- if .Values.addons.netshoot.enabled }}
-    {{- include "common.addon.netshoot" . }}
-  {{- end -}}
-
   {{ include "common.configmap" . | nindent 0 }}
 
   {{- /* Build the templates */ -}}
