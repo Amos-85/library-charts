@@ -1,15 +1,10 @@
----
-name: 'Metadata: Label Commenter'
+name: 'Label Actions'
 
 on:
   issues:
-    types:
-      - labeled
-      - unlabeled
+    types: [labeled]
   pull_request_target:
-    types:
-      - labeled
-      - unlabeled
+    types: [labeled]
 
 permissions:
   contents: read
@@ -17,21 +12,10 @@ permissions:
   pull-requests: write
 
 jobs:
-  comment:
-    name: Label commenter
-    runs-on: ubuntu-20.04
+  label-actions:
+    runs-on: ubuntu-latest
     steps:
-    - uses: getsentry/action-github-app-token@v1
-      id: get-app-token
-      with:
-        app_id: ${{ secrets.BLISSFLOW_APP_ID }}
-        private_key: ${{ secrets.BLISSFLOW_APP_PRIVATE_KEY }}
+      - uses: dessant/label-actions@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
-    - uses: actions/checkout@v3
-      with:
-        token: ${{ steps.get-app-token.outputs.token }}
-        ref: main
-
-    - uses: peaceiris/actions-label-commenter@v1
-      with:
-        github_token: ${{ steps.get-app-token.outputs.token }}
