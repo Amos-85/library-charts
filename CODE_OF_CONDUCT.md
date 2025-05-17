@@ -71,4 +71,3 @@ Community leaders will follow these guidelines when determining the consequences
 ## Attribution
 
 This Code of Conduct is adapted from the [Contributor Covenant](https://www.contributor-covenant.org), version 2.0.
-

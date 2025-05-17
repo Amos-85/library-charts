@@ -28,7 +28,7 @@ Using a library chart:
 
 ## Why BlissFlow's Library?
 
-At BlissFlow, we standardize Helm charts across projects by centralizing common configurations and patterns.  
+At BlissFlow, we standardize Helm charts across projects by centralizing common configurations and patterns.
 Every chart we maintain depends on this **Common** library to ensure:
 - Faster time-to-market
 - Consistent deployments
@@ -56,4 +56,3 @@ If you need help:
 # ✨ Contributions
 
 We welcome contributions! Feel free to submit pull requests to improve the charts.
-

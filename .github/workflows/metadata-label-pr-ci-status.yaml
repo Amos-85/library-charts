@@ -72,4 +72,3 @@ jobs:
           issue-number: ${{ steps.source-run-info.outputs.pullRequestNumber }}
           add-labels: "lint:failed"
           remove-labels: "lint:ok"
-

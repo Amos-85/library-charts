@@ -479,7 +479,7 @@ resources: {}
   #   cpu: 100m
   #   memory: 128Mi
 
-# -- Set cronjob. 
+# -- Set cronjob.
 cronjob: {}
 
 # -- Set job.
@@ -491,4 +491,3 @@ external-secret: {}
 
 # -- Additional extra resources to deploy
 extraDeploy: {}
-
