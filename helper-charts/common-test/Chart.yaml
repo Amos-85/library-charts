@@ -12,5 +12,5 @@ maintainers:
   email: me@bjw-s.dev
 dependencies:
 - name: common
-  repository: https://library-charts.blissflow.tech #file://../../charts/stable/common
+  repository: file://../../charts/stable/common
   version: 4.8.1
