@@ -10,7 +10,7 @@ home: https://github.com/amos-85/library-charts/tree/main/stable/common-test
 maintainers:
 - name: amos-85
   email: contact@blissflow.tech
-dependencies:
-- name: common
-  repository: file://../../charts/stable/common
-  version: 4.8.1
+#dependencies:
+#- name: common
+#  repository: file://../../charts/stable/common
+#  version: 4.8.1

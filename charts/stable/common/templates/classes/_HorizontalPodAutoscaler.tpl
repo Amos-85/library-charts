@@ -1,13 +1,9 @@
-{{/*
-This template serves as a blueprint for horizontal pod autoscaler objects that are created
-using the common library.
-*/}}
 {{- define "common.classes.hpa" -}}
-  {{- if .Values.autoscaling.enabled -}}
-    {{- $hpaName := include "common.names.fullname" . -}}
-    {{- $targetName := include "common.names.fullname" . }}
+{{- if .Values.autoscaling.enabled -}}
+{{- $hpaName := include "common.names.fullname" . -}}
+{{- $targetName := include "common.names.fullname" . }}
 ---
-apiVersion: autoscaling/v2beta1
+apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   name: {{ $hpaName }}
@@ -25,13 +21,39 @@ spec:
     - type: Resource
       resource:
         name: cpu
-        targetAverageUtilization: {{ .Values.autoscaling.targetCPUUtilizationPercentage }}
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.autoscaling.targetCPUUtilizationPercentage }}
     {{- end }}
     {{- if .Values.autoscaling.targetMemoryUtilizationPercentage }}
     - type: Resource
       resource:
         name: memory
-        targetAverageUtilization: {{ .Values.autoscaling.targetMemoryUtilizationPercentage }}
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.autoscaling.targetMemoryUtilizationPercentage }}
     {{- end }}
-  {{- end -}}
-{{- end -}}
+    {{- range .Values.autoscaling.externalMetrics }}
+    - type: External
+      external:
+        metric:
+          name: {{ required "external metric name is required" .name }}
+          {{- if .selector }}
+          selector:
+            matchLabels:
+              {{- toYaml .selector | nindent 14 }}
+          {{- end }}
+        target:
+          type: {{ .target.type }}
+          {{- if eq .target.type "Value" }}
+          value: {{ .target.value }}
+          {{- else if eq .target.type "AverageValue" }}
+          averageValue: {{ .target.averageValue }}
+          {{- end }}
+    {{- end }}
+  {{- with .Values.autoscaling.behavior }}
+  behavior:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+{{- end }}
+{{- end }}
