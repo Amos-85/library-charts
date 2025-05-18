@@ -143,9 +143,7 @@ N/A
 | resources | object | `{}` | Set the resource requests / limits for the main container. |
 | runtimeClassName | string | `nil` | Allow specifying a runtimeClassName other than the default one (ie: nvidia) |
 | schedulerName | string | `nil` | Allows specifying a custom scheduler name |
-| secret | object | `{"date":{},"type":"Opaque"}` | Use this to populate a secret with the values you specify. Be aware that these values are not encrypted by default, and could therefore visible to anybody with access to the values.yaml file. |
-| secret.date | object | `{}` | secret data |
-| secret.type | string | `"Opaque"` | secret type default to Opaque |
+| secret | object | `{}` | Use this to populate a secret with the values you specify. Be aware that these values are not encrypted by default, and could therefore visible to anybody with access to the values.yaml file. |
 | securityContext | object | `{}` | Configure the Security Context for the main container |
 | service | object | See below | Configure the services for the chart here. Additional services can be added by adding a dictionary key similar to the 'main' service. |
 | service.main.annotations | object | `{}` | Provide additional annotations which may be required. |
