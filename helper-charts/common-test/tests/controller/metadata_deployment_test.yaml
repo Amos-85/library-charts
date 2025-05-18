@@ -14,11 +14,6 @@ tests:
           path: metadata.annotations
       - documentIndex: *ControllerDoc
         equal:
-          path: spec.template.metadata.annotations
-          value:
-            checksum/config: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
-      - documentIndex: *ControllerDoc
-        equal:
           path: metadata.labels
           value:
             app.kubernetes.io/instance: RELEASE-NAME
@@ -43,11 +38,6 @@ tests:
           path: metadata.annotations
           value:
             test_annotation: test
-      - documentIndex: *ControllerDoc
-        equal:
-          path: spec.template.metadata.annotations
-          value:
-            checksum/config: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
       - documentIndex: *ControllerDoc
         equal:
           path: metadata.labels
@@ -83,11 +73,6 @@ tests:
             test_annotation: test
       - documentIndex: *ControllerDoc
         equal:
-          path: spec.template.metadata.annotations
-          value:
-            checksum/config: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
-      - documentIndex: *ControllerDoc
-        equal:
           path: metadata.labels
           value:
             app.kubernetes.io/instance: RELEASE-NAME
@@ -96,3 +81,22 @@ tests:
             global_label: test
             helm.sh/chart: common-test-0.1.0
             test_label: test
+
+  - it: checksum annotation should exist when a ConfigMap is added
+    set:
+      controller.type: deployment
+      configmap:
+        test:
+          enabled: true
+          data:
+            test: "value"
+    asserts:
+      - hasDocuments:
+          count: 3
+      - documentIndex: &ControllerDoc 1
+        isKind:
+          of: Deployment
+      - documentIndex: *ControllerDoc
+        matchRegex:
+          path: spec.template.metadata.annotations.checksum/config
+          pattern: '^[a-f0-9]{64}$'

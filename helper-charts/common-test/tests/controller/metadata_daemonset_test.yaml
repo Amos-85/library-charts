@@ -6,25 +6,24 @@ tests:
     set:
       controller.type: daemonset
     asserts:
-      - documentIndex: &ControllerDoc 0
-        isKind:
-          of: DaemonSet
-      - documentIndex: *ControllerDoc
-        isNull:
-          path: metadata.annotations
-      - documentIndex: *ControllerDoc
-        equal:
-          path: spec.template.metadata.annotations
-          value:
-            checksum/config: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
-      - documentIndex: *ControllerDoc
-        equal:
-          path: metadata.labels
-          value:
-            app.kubernetes.io/instance: RELEASE-NAME
-            app.kubernetes.io/managed-by: Helm
-            app.kubernetes.io/name: common-test
-            helm.sh/chart: common-test-0.1.0
+      - hasDocuments:
+          count: 2
+          any:
+            - isKind:
+                of: DaemonSet
+              asserts:
+                - isNull:
+                    path: metadata.annotations
+                - equal:
+                    path: metadata.labels
+                    value:
+                      app.kubernetes.io/instance: RELEASE-NAME
+                      app.kubernetes.io/managed-by: Helm
+                      app.kubernetes.io/name: common-test
+                      helm.sh/chart: common-test-0.1.0
+                - matchRegex:
+                    path: spec.template.metadata.annotations.checksum/config
+                    pattern: "^[a-f0-9]{64}$"
 
   - it: custom metadata should pass
     set:
@@ -35,31 +34,33 @@ tests:
         labels:
           test_label: test
     asserts:
-      - documentIndex: &ControllerDoc 0
-        isKind:
-          of: DaemonSet
-      - documentIndex: *ControllerDoc
-        equal:
-          path: metadata.annotations
-          value:
-            test_annotation: test
-      - documentIndex: *ControllerDoc
-        equal:
-          path: spec.template.metadata.annotations
-          value:
-            checksum/config: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
-      - documentIndex: *ControllerDoc
-        equal:
-          path: metadata.labels
-          value:
-            app.kubernetes.io/instance: RELEASE-NAME
-            app.kubernetes.io/managed-by: Helm
-            app.kubernetes.io/name: common-test
-            helm.sh/chart: common-test-0.1.0
-            test_label: test
+      - hasDocuments:
+          count: 2
+          any:
+            - isKind:
+                of: DaemonSet
+              asserts:
+                - equal:
+                    path: metadata.annotations
+                    value:
+                      test_annotation: test
+                - equal:
+                    path: metadata.labels
+                    value:
+                      app.kubernetes.io/instance: RELEASE-NAME
+                      app.kubernetes.io/managed-by: Helm
+                      app.kubernetes.io/name: common-test
+                      helm.sh/chart: common-test-0.1.0
+                      test_label: test
+                - matchRegex:
+                    path: spec.template.metadata.annotations.checksum/config
+                    pattern: "^[a-f0-9]{64}$"
 
-  - it: custom metadata with global metadata should pass
+  - it: custom metadata with global metadata and configmap
     set:
+      configmap:
+        test:
+          enabled: true
       global:
         labels:
           global_label: test
@@ -72,27 +73,35 @@ tests:
         labels:
           test_label: test
     asserts:
-      - documentIndex: &ControllerDoc 0
-        isKind:
-          of: DaemonSet
-      - documentIndex: *ControllerDoc
-        equal:
-          path: metadata.annotations
-          value:
-            global_annotation: test
-            test_annotation: test
-      - documentIndex: *ControllerDoc
-        equal:
-          path: spec.template.metadata.annotations
-          value:
-            checksum/config: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
-      - documentIndex: *ControllerDoc
-        equal:
-          path: metadata.labels
-          value:
-            app.kubernetes.io/instance: RELEASE-NAME
-            app.kubernetes.io/managed-by: Helm
-            app.kubernetes.io/name: common-test
-            global_label: test
-            helm.sh/chart: common-test-0.1.0
-            test_label: test
+      - hasDocuments:
+          count: 3
+          any:
+            - isKind:
+                of: DaemonSet
+              asserts:
+                - equal:
+                    path: metadata.annotations
+                    value:
+                      global_annotation: test
+                      test_annotation: test
+                - equal:
+                    path: metadata.labels
+                    value:
+                      app.kubernetes.io/instance: RELEASE-NAME
+                      app.kubernetes.io/managed-by: Helm
+                      app.kubernetes.io/name: common-test
+                      helm.sh/chart: common-test-0.1.0
+                      global_label: test
+                      test_label: test
+                - matchRegex:
+                    path: spec.template.metadata.annotations.checksum/config
+                    pattern: "^[a-f0-9]{64}$"
+      - hasDocuments:
+          count: 3
+          any:
+            - isKind:
+                of: ConfigMap
+              asserts:
+                - matchRegex:
+                    path: metadata.name
+                    pattern: "^.*test.*$"
