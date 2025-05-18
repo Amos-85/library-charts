@@ -15,7 +15,7 @@ jobs:
       changed: ${{ steps.list-changed.outputs.changed }}
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         fetch-depth: 0
 
@@ -29,7 +29,7 @@ jobs:
         python-version: 3.8
 
     - name: Set up chart-testing
-      uses: helm/chart-testing-action@v2.2.1
+      uses: helm/chart-testing-action@v2.7.0
 
     - name: Run chart-testing (list-changed)
       id: list-changed
@@ -51,18 +51,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         fetch-depth: 0
 
     - name: Install Helm
-      uses: azure/setup-helm@v3
+      uses: azure/setup-helm@v4
       with:
-        version: v3.5.4
+        version: v3.17.3
 
     - name: Run tests
       run: |
-        helm plugin install https://github.com/vbehar/helm3-unittest --version v1.0.16
+        helm plugin install https://github.com/helm-unittest/helm-unittest.git --version v0.8.2
         cd helper-charts/common-test/
         helm unittest -f "tests/**/*_test.yaml" .
 
@@ -73,21 +73,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         fetch-depth: 0
 
     - name: Install Helm
-      uses: azure/setup-helm@v3
+      uses: azure/setup-helm@v4
       with:
-        version: v3.5.4
+        version: v3.17.3
 
-    - uses: actions/setup-python@v4
+    - uses: actions/setup-python@v5
       with:
-        python-version: 3.7
+        python-version: 3.8
 
     - name: Set up chart-testing
-      uses: helm/chart-testing-action@v2.2.1
+      uses: helm/chart-testing-action@v2.7.0
 
     - name: Create k3d cluster
       uses: nolar/setup-k3d-k3s@v1
