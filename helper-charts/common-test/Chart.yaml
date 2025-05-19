@@ -6,7 +6,7 @@ kubeVersion: ">=1.16.0-0"
 keywords:
 - blissflow
 - common
-home: https://github.com/amos-85/library-charts/tree/main/stable/common-test
+home: https://github.com/blissflow-tech/library-charts
 maintainers:
 - name: amos-85
   email: contact@blissflow.tech

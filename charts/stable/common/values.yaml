@@ -508,6 +508,24 @@ job: {}
 # -- Set External Secrets
 external-secret: {}
   ## This is for using external-secrets resources usually for production use.
+ #  - name: example-secret
+ #    secretStoreRef:
+ #      name: my-secret-store
+ #      kind: ClusterSecretStore
+ #    target:
+ #      name: my-k8s-secret
+ #    data:
+ #      - secretKey: username
+ #        remoteRef:
+ #          key: prod/db-credentials
+ #          property: username
+ #      - secretKey: password
+ #        remoteRef:
+ #          key: prod/db-credentials
+ #          property: password
+ #    dataFrom:
+ #      - extract:
+ #          key: shared/secrets
 
 # -- Additional extra resources to deploy
 extraDeploy: {}

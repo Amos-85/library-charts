@@ -4,7 +4,7 @@
   <img src="https://blissflow.tech/_next/image?url=%2Flogo.jpg&w=1920&q=75" alt="BlissFlow Logo" width="250"/>
 </p>
 
-[![CI](https://github.com/amos-85/library-charts/actions/workflows/charts-release.yaml/badge.svg)](https://github.com/amos-85/library-charts/actions)
+[![CI](https://github.com/blissflow-tech/library-charts/actions/workflows/charts-release.yaml/badge.svg)](https://github.com/blissflow-tech/library-charts/actions)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 
 **Accelerate Your Cloud Journey**
@@ -36,12 +36,12 @@ Every chart we maintain depends on this **Common** library to ensure:
 
 ## Changelog
 
-See [CHANGELOG.md](https://github.com/Amos-85/library-charts/tree/main/charts/stable/common#changelog) for release history and updates.
+See [CHANGELOG.md](https://github.com/blissflow-tech/library-charts/tree/main/charts/stable/common#changelog) for release history and updates.
 
 ## Support
 
 If you need help:
-- Open an [Issue](https://github.com/amos-85/library-charts/issues)
+- Open an [Issue](https://github.com/blissflow-tech/library-charts/issues)
 - Contact us at [contact@blissflow.tech](mailto:contact@blissflow.tech)
 
 ---
