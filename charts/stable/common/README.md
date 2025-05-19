@@ -1,6 +1,6 @@
 # common
 
-![Version: 4.8.1](https://img.shields.io/badge/Version-4.8.1-informational?style=flat-square) ![Type: library](https://img.shields.io/badge/Type-library-informational?style=flat-square)
+![Version: 4.9.0](https://img.shields.io/badge/Version-4.9.0-informational?style=flat-square) ![Type: library](https://img.shields.io/badge/Type-library-informational?style=flat-square)
 
 Function library for blissflow charts
 
@@ -179,6 +179,13 @@ All notable changes to this library Helm chart will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+### [4.9.0]
+
+#### Added
+
+- autoscaling.behavior
+- upgrade hpa api version
 
 ### [4.8.1]
 
