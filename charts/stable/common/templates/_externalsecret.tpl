@@ -1,10 +1,34 @@
 {{/*
+Renders the remoteRef block.
+Usage: include "common.remoteRef" (dict "remoteRef" .remoteRef)
+*/}}
+{{- define "common.remoteRef" -}}
+key: {{ required "remoteRef.key is required" .remoteRef.key }}
+{{- with .remoteRef.metadataPolicy }}
+metadataPolicy: {{ . }}
+{{- end }}
+{{- with .remoteRef.property }}
+property: {{ . }}
+{{- end }}
+{{- with .remoteRef.version }}
+version: {{ . }}
+{{- end }}
+{{- with .remoteRef.conversionStrategy }}
+conversionStrategy: {{ . }}
+{{- end }}
+{{- with .remoteRef.decodingStrategy }}
+decodingStrategy: {{ . }}
+{{- end }}
+{{- end }}
+
+---
+{{/*
 The External Secret object to be created.
 */}}
 {{- define "common.external-secret" }}
 {{- range $k := index .Values "external-secrets" }}
 ---
-apiVersion: external-secrets.io/v1beta1
+apiVersion: external-secrets.io/v1
 kind: {{ $k.kind | default "ExternalSecret" }}
 metadata:
   name: {{ $k.name }}
@@ -26,63 +50,39 @@ spec:
     deletionPolicy: {{ $k.target.deletionPolicy | default "Retain" }}
     {{- with $k.target.template }}
     template:
-      type:  {{ $k.target.template.type | default "Opaque" }}
-      engineVersion: {{ $k.target.template.engineVersion | default "v2" }}
-      {{- with $k.target.template.metadata }}
+      type:  {{ .type | default "Opaque" }}
+      engineVersion: {{ .engineVersion | default "v2" }}
+      {{- with .metadata }}
       metadata:
         labels:
           {{- include "common.labels" $ | nindent 12 }}
-          {{- with $k.target.template.metadata.labels }}
+          {{- with .labels }}
           {{- toYaml . | nindent 12 }}
           {{- end }}
         annotations:
-          {{- include "common.annotations" $ | nindent 12 -}}
-          {{- with $k.target.template.metadata.annotations }}
+          {{- include "common.annotations" $ | nindent 12 }}
+          {{- with .annotations }}
           {{- toYaml . | nindent 12 }}
           {{- end }}
       {{- end }}
-      {{- with $k.target.template.data }}
+      {{- with .data }}
       data: {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with $k.target.template.templateFrom  }}
+      {{- with .templateFrom  }}
       templateFrom: {{- toYaml . | nindent 8 }}
       {{- end }}
     {{- end }}
   {{- with $k.data }}
   data:
-  {{- range $k.data }}
-  - secretKey: {{ .secretKey }}
+  {{- range $entry := $k.data }}
+  - secretKey: {{ $entry.secretKey }}
     remoteRef:
-      key: {{ .remoteRef.key }}
-      {{- with .remoteRef.metadataPolicy }}
-      metadataPolicy: {{ . }}
-      {{- end }}
-      {{- with .remoteRef.property }}
-      property: {{ . }}
-      {{- end }}
-      {{- with .remoteRef.version }}
-      version: {{ . }}
-      {{- end }}
-      {{- with .remoteRef.conversionStrategy }}
-      conversionStrategy: {{ . }}
-      {{- end }}
-      {{- with .remoteRef.decodingStrategy }}
-      decodingStrategy: {{ . }}
-      {{- end }}
+      {{- include "common.remoteRef" (dict "remoteRef" $entry.remoteRef) | nindent 4 }}
   {{- end }}
   {{- end }}
   {{- with $k.dataFrom }}
-  data:
-  {{- range $k.dataFrom }}
-  - secretKey: {{ .secretKey }}
-    remoteRef:
-      key: {{ .remoteRef.key }}
-      metadataPolicy: {{ .remoteRef.metadataPolicy }}
-      property: {{ .remoteRef.property }}
-      version: {{ .remoteRef.version }}
-      conversionStrategy: {{ .remoteRef.conversionStrategy }}
-      decodingStrategy: {{ .remoteRef.decodingStrategy }}
+  dataFrom:
+  {{- toYaml . | nindent 2 }}
   {{- end }}
-{{- end }}
 {{- end }}
 {{- end }}
